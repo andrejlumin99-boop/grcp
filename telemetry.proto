@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package telemetry.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Запрос на получение параметра
+message GetParameterRequest {
+    string name = 1;
+}
+
+// Ответ с параметром
+message GetParameterResponse {
+    string name = 1;
+    string value = 2;
+    google.protobuf.Timestamp timestamp = 3;
+    int32 status_code = 4;        
+    string status_message = 5;    
+}
+
+// Запрос на установку параметра
+message SetParameterRequest {
+    string name = 1;
+    string value = 2;
+    string request_id = 3;
+}
+
+// Ответ на установку параметра
+message SetParameterResponse {
+    int32 status_code = 1;        
+    string status_message = 2;    
+}
+
+// Описание самого gRPC сервиса и его методов
+service TelemetryService {
+    rpc GetParameter(GetParameterRequest) returns (GetParameterResponse);
+    rpc SetParameter(SetParameterRequest) returns (SetParameterResponse);
+}
